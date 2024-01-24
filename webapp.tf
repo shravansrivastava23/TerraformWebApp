@@ -19,3 +19,18 @@ resource "azurerm_app_service_plan" "service-plan" {
     environment = "dev"
   }
 }
+
+# Create JAVA app service
+resource "azurerm_app_service" "app-service" {
+  name = "my-awesome-app-svc"
+  location = azurerm_resource_group.dev-rg.location
+  resource_group_name = azurerm_resource_group.dev-rg.name
+  app_service_plan_id = azurerm_app_service_plan.service-plan.id
+
+site_config {
+    linux_fx_version = "TOMCAT|8.5-java11"
+  }
+tags = {
+    environment = "dev"
+  }
+}
